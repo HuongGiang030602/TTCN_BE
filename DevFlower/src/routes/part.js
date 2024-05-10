@@ -1,6 +1,6 @@
 import {Router} from "express";
-import {asyncHandler} from "@/utils/handlers";
-import {verifyToken, validate} from "../app/middleware/common";
+// import {} from "@/utils/handlers";
+import {validate} from "../app/middleware/common";
 
 import * as partRequest from "../app/requests/part.request";
 import * as partMiddleware from "../app/middleware/part.middleware";
@@ -8,37 +8,37 @@ import * as partController from "../app/controllers/part.controller";
 
 const router = Router();
 
-router.use(asyncHandler(verifyToken));
+// router.use((verifyToken));
 
 router.get(
     "/",
-    asyncHandler(validate(partRequest.readRoot)),
-    asyncHandler(partController.readRoot)
+    (validate(partRequest.readRoot)),
+    (partController.readRoot)
 );
 
 router.get(
     "/:id",
-    asyncHandler(partMiddleware.checkPartId),
-    asyncHandler(partController.readItem)
+    (partMiddleware.checkPartId),
+    (partController.readItem)
 );
 
 router.post(
     "/",
-    asyncHandler(validate(partRequest.createItem)),
-    asyncHandler(partController.createItem)
+    (validate(partRequest.createItem)),
+    (partController.createItem)
 );
 
 router.put(
     "/:id",
-    asyncHandler(partMiddleware.checkPartId),
-    asyncHandler(validate(partRequest.updateItem)),
-    asyncHandler(partController.updateItem),
+    (partMiddleware.checkPartId),
+    (validate(partRequest.updateItem)),
+    (partController.updateItem),
 );
 
 router.delete(
     "/:id",
-    asyncHandler(partMiddleware.checkPartId),
-    asyncHandler(partController.removeItem)
+    (partMiddleware.checkPartId),
+    (partController.removeItem)
 );
 
 

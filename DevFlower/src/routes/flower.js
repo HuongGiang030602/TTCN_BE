@@ -1,6 +1,6 @@
 import {Router} from "express";
-import {asyncHandler} from "@/utils/handlers";
-import {verifyToken, validate, upload} from "../app/middleware/common";
+// import {} from "@/utils/handlers";
+import {validate, upload} from "../app/middleware/common";
 
 import * as flowerRequest from "../app/requests/flower.request";
 import * as flowerMiddleware from "../app/middleware/flower.middleware";
@@ -8,39 +8,39 @@ import * as flowerController from "../app/controllers/flower.controller";
 
 const router = Router();
 
-router.use(asyncHandler(verifyToken));
+// router.use((verifyToken));
 
 router.get(
     "/",
-    asyncHandler(validate(flowerRequest.readRoot)),
-    asyncHandler(flowerController.readRoot)
+    (validate(flowerRequest.readRoot)),
+    (flowerController.readRoot)
 );
 
 router.get(
     "/:id",
-    asyncHandler(flowerMiddleware.checkFlowerId),
-    asyncHandler(flowerController.readItem)
+    (flowerMiddleware.checkFlowerId),
+    (flowerController.readItem)
 );
 
 router.post(
     "/",
-    asyncHandler(upload),
-    asyncHandler(validate(flowerRequest.createItem)),
-    asyncHandler(flowerController.createItem)
+    (upload),
+    (validate(flowerRequest.createItem)),
+    (flowerController.createItem)
 );
 
 router.put(
     "/:id",
-    asyncHandler(upload),
-    asyncHandler(flowerMiddleware.checkFlowerId),
-    asyncHandler(validate(flowerRequest.updateItem)),
-    asyncHandler(flowerController.updateItem),
+    (upload),
+    (flowerMiddleware.checkFlowerId),
+    (validate(flowerRequest.updateItem)),
+    (flowerController.updateItem),
 );
 
 router.delete(
     "/:id",
-    asyncHandler(flowerMiddleware.checkFlowerId),
-    asyncHandler(flowerController.removeItem)
+    (flowerMiddleware.checkFlowerId),
+    (flowerController.removeItem)
 );
 
 

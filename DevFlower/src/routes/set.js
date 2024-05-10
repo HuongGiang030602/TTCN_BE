@@ -1,6 +1,6 @@
 import {Router} from "express";
-import {asyncHandler} from "@/utils/handlers";
-import {verifyToken, validate} from "../app/middleware/common";
+// import {} from "@/utils/handlers";
+import {validate} from "../app/middleware/common";
 
 import * as setRequest from "../app/requests/set.request";
 import * as setMiddleware from "../app/middleware/set.middleware";
@@ -8,37 +8,37 @@ import * as setController from "../app/controllers/set.controller";
 
 const router = Router();
 
-router.use(asyncHandler(verifyToken));
+// router.use((verifyToken));
 
 router.get(
     "/",
-    asyncHandler(validate(setRequest.readRoot)),
-    asyncHandler(setController.readRoot)
+    (validate(setRequest.readRoot)),
+    (setController.readRoot)
 );
 
 router.get(
     "/:id",
-    asyncHandler(setMiddleware.checkSetId),
-    asyncHandler(setController.readItem)
+    (setMiddleware.checkSetId),
+    (setController.readItem)
 );
 
 router.post(
     "/",
-    asyncHandler(validate(setRequest.createItem)),
-    asyncHandler(setController.createItem)
+    (validate(setRequest.createItem)),
+    (setController.createItem)
 );
 
 router.put(
     "/:id",
-    asyncHandler(setMiddleware.checkSetId),
-    asyncHandler(validate(setRequest.updateItem)),
-    asyncHandler(setController.updateItem),
+    (setMiddleware.checkSetId),
+    (validate(setRequest.updateItem)),
+    (setController.updateItem),
 );
 
 router.delete(
     "/:id",
-    asyncHandler(setMiddleware.checkSetId),
-    asyncHandler(setController.removeItem)
+    (setMiddleware.checkSetId),
+    (setController.removeItem)
 );
 
 

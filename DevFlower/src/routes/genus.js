@@ -1,6 +1,6 @@
 import {Router} from "express";
-import {asyncHandler} from "@/utils/handlers";
-import {verifyToken, validate} from "../app/middleware/common";
+// import {} from "@/utils/handlers";
+import {validate} from "../app/middleware/common";
 
 import * as genusRequest from "../app/requests/genus.request";
 import * as genusMiddleware from "../app/middleware/genus.middleware";
@@ -8,37 +8,37 @@ import * as genusController from "../app/controllers/genus.controller";
 
 const router = Router();
 
-router.use(asyncHandler(verifyToken));
+// router.use((verifyToken));
 
 router.get(
     "/",
-    asyncHandler(validate(genusRequest.readRoot)),
-    asyncHandler(genusController.readRoot)
+    (validate(genusRequest.readRoot)),
+    (genusController.readRoot)
 );
 
 router.get(
     "/:id",
-    asyncHandler(genusMiddleware.checkGenusId),
-    asyncHandler(genusController.readItem)
+    (genusMiddleware.checkGenusId),
+    (genusController.readItem)
 );
 
 router.post(
     "/",
-    asyncHandler(validate(genusRequest.createItem)),
-    asyncHandler(genusController.createItem)
+    (validate(genusRequest.createItem)),
+    (genusController.createItem)
 );
 
 router.put(
     "/:id",
-    asyncHandler(genusMiddleware.checkGenusId),
-    asyncHandler(validate(genusRequest.updateItem)),
-    asyncHandler(genusController.updateItem),
+    (genusMiddleware.checkGenusId),
+    (validate(genusRequest.updateItem)),
+    (genusController.updateItem),
 );
 
 router.delete(
     "/:id",
-    asyncHandler(genusMiddleware.checkGenusId),
-    asyncHandler(genusController.removeItem)
+    (genusMiddleware.checkGenusId),
+    (genusController.removeItem)
 );
 
 

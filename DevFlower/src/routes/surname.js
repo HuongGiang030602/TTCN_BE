@@ -1,6 +1,6 @@
 import {Router} from "express";
-import {asyncHandler} from "@/utils/handlers";
-import {verifyToken, validate} from "../app/middleware/common";
+// import {} from "@/utils/handlers";
+import {validate} from "../app/middleware/common";
 
 import * as surnameRequest from "../app/requests/surname.request";
 import * as surnameMiddleware from "../app/middleware/surname.middleware";
@@ -8,37 +8,37 @@ import * as surnameController from "../app/controllers/surname.controller";
 
 const router = Router();
 
-router.use(asyncHandler(verifyToken));
+// router.use((verifyToken));
 
 router.get(
     "/",
-    asyncHandler(validate(surnameRequest.readRoot)),
-    asyncHandler(surnameController.readRoot)
+    (validate(surnameRequest.readRoot)),
+    (surnameController.readRoot)
 );
 
 router.get(
     "/:id",
-    asyncHandler(surnameMiddleware.checkSurnameId),
-    asyncHandler(surnameController.readItem)
+    (surnameMiddleware.checkSurnameId),
+    (surnameController.readItem)
 );
 
 router.post(
     "/",
-    asyncHandler(validate(surnameRequest.createItem)),
-    asyncHandler(surnameController.createItem)
+    (validate(surnameRequest.createItem)),
+    (surnameController.createItem)
 );
 
 router.put(
     "/:id",
-    asyncHandler(surnameMiddleware.checkSurnameId),
-    asyncHandler(validate(surnameRequest.updateItem)),
-    asyncHandler(surnameController.updateItem),
+    (surnameMiddleware.checkSurnameId),
+    (validate(surnameRequest.updateItem)),
+    (surnameController.updateItem),
 );
 
 router.delete(
     "/:id",
-    asyncHandler(surnameMiddleware.checkSurnameId),
-    asyncHandler(surnameController.removeItem)
+    (surnameMiddleware.checkSurnameId),
+    (surnameController.removeItem)
 );
 
 
