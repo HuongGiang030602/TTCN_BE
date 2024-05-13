@@ -13,7 +13,6 @@ build
 
 # misc
 .env
-public/uploads/*
 
 src/storage/*
 !src/storage/cache
