@@ -40,16 +40,14 @@ export const register = Joi.object({
                 }),
         ),
     avatar: Joi.object({
-        originalname: Joi.string().trim().required().label("Tên ảnh"),
+        originalname: Joi.string().trim().label("Tên ảnh"),
         mimetype: Joi.valid("image/jpeg", "image/png", "image/svg+xml", "image/webp")
-            .required()
             .label("Định dạng ảnh"),
-        buffer: Joi.binary().required().label("Ảnh đại diện"),
+        buffer: Joi.binary().label("Ảnh đại diện"),
     })
         .instance(FileUpload)
         .allow("")
-        .label("Ảnh đại diện")
-        .required(),
+        .label("Ảnh đại diện"),
 });
 
 export const updateProfile = Joi.object({
@@ -82,16 +80,15 @@ export const updateProfile = Joi.object({
                 }),
         ),
     avatar: Joi.object({
-        originalname: Joi.string().trim().required().label("Tên ảnh"),
+        originalname: Joi.string().trim().label("Tên ảnh"),
         mimetype: Joi.valid("image/jpeg", "image/png", "image/svg+xml", "image/webp")
-            .required()
             .label("Định dạng ảnh"),
-        buffer: Joi.binary().required().label("Ảnh đại diện"),
+        buffer: Joi.binary().label("Ảnh đại diện"),
     })
         .instance(FileUpload)
         .allow("")
-        .label("Ảnh đại diện")
-        .required(),
+        .label("Ảnh đại diện"),
+        
 });
 
 export const changePassword = Joi.object({
