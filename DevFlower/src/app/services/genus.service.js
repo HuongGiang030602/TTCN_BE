@@ -15,14 +15,14 @@ export async function filter({q, page, per_page, field, sort_order}) {
         ...(q && {name: q}),
     };
 
-    const genuss = (
+    const genuses = (
         await Genus.find(filter)
             .skip((page - 1) * per_page)
             .limit(per_page)
             .sort({[field]: sort_order})
     );
     const total = await Genus.countDocuments(filter);
-    return {total, page, per_page, genuss};
+    return {total, page, per_page, genuses};
 }
 
 export async function details(genusId) {

@@ -27,6 +27,10 @@ export const Flower = createModel("Flower","flowers", {
         type: Array,
         default: []
     },
+    dowload: {
+        type: String,
+        default: ""
+    },
     set_id: {
         type: ObjectId,
         ref: "Set"

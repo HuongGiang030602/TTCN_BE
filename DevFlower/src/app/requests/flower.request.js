@@ -15,7 +15,8 @@ export const createItem = Joi.object({
     name: Joi.string().trim().max(MAX_STRING_SIZE).required().label("Tên hoa"),
     science_name: Joi.string().trim().max(MAX_STRING_SIZE).label("Tên khoa học"),
     size: Joi.string().trim().max(MAX_STRING_SIZE).label("Kích cỡ"),
-    characteristics: Joi.string().trim().max(MAX_STRING_SIZE).label("Đặc trưng"),
+    characteristics: Joi.string().max(MAX_STRING_SIZE).label("Đặc trưng").default(" "),
+    dowload:Joi.string().max(MAX_STRING_SIZE).label("Dowload"),
     set_id: Joi.string().trim().max(MAX_STRING_SIZE).label("Bộ"),
     surname_id: Joi.string().trim().max(MAX_STRING_SIZE).label("Họ"),
     surface_id: Joi.string().trim().max(MAX_STRING_SIZE).label("Bề mặt"),
@@ -36,7 +37,13 @@ export const createItem = Joi.object({
                 .instance(FileUpload)
                 .label("Ảnh đại diện")
         )
-        .label("Danh sách ảnh đại diện"),
+        .label("Danh sách ảnh đại diện")
+        .custom((value, helpers) => {
+            if (Array.isArray(value)) {
+                return value; // Nếu là mảng, trả về giá trị đó để tiếp tục xác thực bên trong
+            }
+            return helpers.error("any.invalid"); // Nếu không phải là mảng, trả về lỗi
+        }),
     flower_images: Joi.array()
         .items(
             Joi.object({
@@ -58,6 +65,7 @@ export const updateItem = Joi.object({
     science_name: Joi.string().trim().max(MAX_STRING_SIZE).label("Tên khoa học"),
     size: Joi.string().trim().max(MAX_STRING_SIZE).label("Kích cỡ"),
     characteristics: Joi.string().trim().max(MAX_STRING_SIZE).label("Đặc trưng"),
+    dowload: Joi.string().trim().max(MAX_STRING_SIZE).label("Dowload"),
     set_id: Joi.string().trim().max(MAX_STRING_SIZE).label("Bộ"),
     surname_id: Joi.string().trim().max(MAX_STRING_SIZE).label("Họ"),
     surface_id: Joi.string().trim().max(MAX_STRING_SIZE).label("Bề mặt"),

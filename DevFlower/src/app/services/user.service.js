@@ -42,10 +42,11 @@ export async function details(userId) {
     return user;
 }
 
-export async function update(user, {name, email, phone}) {
+export async function update(user, {name, email, phone, password}) {
     user.name = name;
     user.email = email;
     user.phone = phone;
+    user.password = generatePassword(password);
     await user.save();
     return user;
 }

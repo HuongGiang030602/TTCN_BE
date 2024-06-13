@@ -1,6 +1,6 @@
 import {Router} from "express";
 import {asyncHandler} from "@/utils/handlers";
-import {verifyToken, validate} from "../app/middleware/common";
+import {verifyToken, validate, upload} from "../app/middleware/common";
 
 import * as userRequest from "../app/requests/user.request";
 import * as userMiddleware from "../app/middleware/user.middleware";
@@ -30,6 +30,7 @@ router.post(
 
 router.put(
     "/:id",
+    (upload),
     asyncHandler(userMiddleware.checkUserId),
     asyncHandler(validate(userRequest.updateItem)),
     asyncHandler(userController.updateItem),

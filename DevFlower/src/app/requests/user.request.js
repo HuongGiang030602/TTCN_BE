@@ -73,6 +73,7 @@ export const updateItem = Joi.object({
                     return !user ? value : helpers.error("any.exists");
                 }),
         ),
+    password: Joi.string().min(6).max(MAX_STRING_SIZE).required().label("Mật khẩu"),
 });
 
 export const resetPassword = Joi.object({

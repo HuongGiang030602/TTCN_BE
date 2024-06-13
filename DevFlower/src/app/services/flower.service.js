@@ -2,7 +2,7 @@ import { LINK_STATIC_URL } from "@/configs";
 import { Flower } from "../models";
 import { FileUpload } from "@/utils/types";
 
-export async function create({ name, science_name, size, characteristics, pollen_grain_images, flower_images, set_id, surname_id, surface_id, part_id, aperture_id, genus_id, shape_id }) {
+export async function create({ name, science_name, size, characteristics,dowload, pollen_grain_images, flower_images, set_id, surname_id, surface_id, part_id, aperture_id, genus_id, shape_id }) {
 
 
     if (Array.isArray(pollen_grain_images)) {
@@ -30,6 +30,7 @@ export async function create({ name, science_name, size, characteristics, pollen
         characteristics,
         pollen_grain_images,
         flower_images,
+        dowload,
         set_id,
         surname_id,
         surface_id,
@@ -58,6 +59,7 @@ export async function filter({q, page, per_page, field, sort_order}) {
             .populate("aperture_id", "name")
             .populate("genus_id", "name")
             .populate("shape_id", "name")
+            .populate("dowload", "name")
             .skip((page - 1) * per_page)
             .limit(per_page)
             .sort({[field]: sort_order}))
@@ -88,11 +90,12 @@ export async function details(flowerId) {
         .populate("part_id", "name")
         .populate("aperture_id", "name")
         .populate("genus_id", "name")
-        .populate("shape_id", "name");
+        .populate("shape_id", "name")
+        .populate("dowload", "name");
     return flower;
 }
 
-export async function update(flower, { name, science_name, size, characteristics, pollen_grain_images, flower_images, set_id, surname_id, surface_id, part_id, aperture_id, genus_id, shape_id }) {
+export async function update(flower, { name, science_name, size, characteristics,dowload, pollen_grain_images, flower_images, set_id, surname_id, surface_id, part_id, aperture_id, genus_id, shape_id }) {
     if (Array.isArray(pollen_grain_images)) {
         for (let i = 0; i < pollen_grain_images.length; i++) {
             if (pollen_grain_images[i] && flower.pollen_grain_images[i]) {
@@ -115,14 +118,18 @@ export async function update(flower, { name, science_name, size, characteristics
         }
     }
 
-    console.log(pollen_grain_images,flower_images );
-    
+    console.log(pollen_grain_images, flower_images);
+
     flower.name = name;
     flower.science_name = science_name;
     flower.size = size;
     flower.characteristics = characteristics;
-    flower.pollen_grain_images = pollen_grain_images.map(item=> item.filepath);
-    flower.flower_images = flower_images.map(item=> item.filepath);
+    flower.dowload = dowload;
+
+    // Add check to ensure arrays are defined before calling map
+    flower.pollen_grain_images = Array.isArray(pollen_grain_images) ? pollen_grain_images.map(item => item.filepath) : [];
+    flower.flower_images = Array.isArray(flower_images) ? flower_images.map(item => item.filepath) : [];
+
     flower.surname_id = surname_id;
     flower.surface_id = surface_id;
     flower.part_id = part_id;
@@ -130,8 +137,10 @@ export async function update(flower, { name, science_name, size, characteristics
     flower.aperture_id = aperture_id;
     flower.genus_id = genus_id;
     flower.shape_id = shape_id;
+
     return await flower.save();
 }
+
 
 
 export async function remove(flower) {
