@@ -1,3 +1,4 @@
+import { ROLE_STATUS } from "../middleware/common/enum";
 import {createModel} from "./base";
 
 export const User = createModel("User", "users", {
@@ -17,4 +18,10 @@ export const User = createModel("User", "users", {
         required: true,
     },
     avatar: String,
+    role: {
+        type: Number,
+        enum: Object.values(ROLE_STATUS),
+        required: true,
+        default: 0
+    }
 });

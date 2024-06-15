@@ -41,6 +41,7 @@ export const createItem = Joi.object({
                 }),
         ),
     password: Joi.string().min(6).max(MAX_STRING_SIZE).required().label("Mật khẩu"),
+    role: Joi.number().max(MAX_STRING_SIZE).required().label("Vai trò"),
 });
 
 export const updateItem = Joi.object({
@@ -74,6 +75,7 @@ export const updateItem = Joi.object({
                 }),
         ),
     password: Joi.string().min(6).max(MAX_STRING_SIZE).required().label("Mật khẩu"),
+    role: Joi.number().max(MAX_STRING_SIZE).required().label("Vai trò"),
 });
 
 export const resetPassword = Joi.object({

@@ -1,12 +1,13 @@
 import {User} from "../models";
 import {LINK_STATIC_URL} from "@/configs";
-import {generatePassword} from "@/utils/helpers";
+import {generatePassword, comparePassword} from "@/utils/helpers";
 
-export async function create({name, email, password, phone}) {
+export async function create({name, email, password, phone, role}) {
     const user = new User({
         name,
         email,
         phone,
+        role,
         password: generatePassword(password),
     });
     await user.save();
@@ -37,15 +38,16 @@ export async function filter({q, page, per_page, field, sort_order}) {
 }
 
 export async function details(userId) {
-    const user = await User.findById(userId, {password: 0});
+    const user = await User.findById(userId);
     user.avatar = LINK_STATIC_URL + user.avatar;
     return user;
 }
 
-export async function update(user, {name, email, phone, password}) {
+export async function update(user, {name, email, phone, password, role}) {
     user.name = name;
     user.email = email;
     user.phone = phone;
+    user.role = role;
     user.password = generatePassword(password);
     await user.save();
     return user;
